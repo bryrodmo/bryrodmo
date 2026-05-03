@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Bryan Rodríguez — BryRodMo</title>
+  <meta name="description" content="Desarrollador full-stack, ingeniero de IA, creador de contenido y constructor de soluciones innovadoras desde Puerto Rico." />
+  <meta name="author" content="Bryan Rodríguez" />
+
+  <!-- Open Graph (WhatsApp, iMessage, Discord previews) -->
+  <meta property="og:title" content="Bryan Rodríguez — bryrodmo" />
+  <meta property="og:description" content="Le enseña a las computadoras a pensar. Ingeniero de IA desde Puerto Rico." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bryrodmo.com" />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,800;0,900;1,800&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===================== TOKENS ===================== */
+    :root {
+      --bg:      #0d0f1a;
+      --surface: #13162a;
+      --card:    #181b2e;
+      --blue:    #4f8ef7;
+      --teal:    #2ecfb3;
+      --pink:    #f76f8e;
+      --yellow:  #f7c948;
+      --text:    #e4e8ff;
+      --muted:   #6b71a0;
+      --border:  rgba(255, 255, 255, 0.06);
+    }
+
+    /* ===================== RESET ===================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===================== BACKGROUND BLOBS ===================== */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 { width: 400px; height: 400px; background: var(--blue); top: -100px; right: -100px; }
+    .blob-2 { width: 300px; height: 300px; background: var(--teal); bottom: 100px; left: -80px; }
+    .blob-3 { width: 200px; height: 200px; background: var(--pink); top: 50%; left: 50%; }
+
+    /* ===================== LAYOUT ===================== */
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 28px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===================== HERO ===================== */
+    .hero {
+      text-align: center;
+      margin-bottom: 72px;
+      animation: appear 0.8s ease both;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(40px, 9vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-body {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.85;
+    }
+
+    .hero-body strong { color: var(--text); font-weight: 600; font-size: 18px; }
+
+    /* ===================== LINKS ROW ===================== */
+    .links-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+      animation: appear 0.8s 0.1s ease both;
+    }
+
+    .link-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-chip:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      transform: translateY(-1px);
+    }
+
+    /* ===================== ANALOGY BOX ===================== */
+    .analogy {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      border-radius: 20px;
+      padding: 40px 36px;
+      margin-bottom: 56px;
+      position: relative;
+      overflow: hidden;
+      animation: appear 0.8s 0.15s ease both;
+    }
+
+    .analogy::before {
+      content: '¿';
+      position: absolute;
+      top: -30px;
+      left: 16px;
+      font-family: 'Fraunces', serif;
+      font-size: 200px;
+      color: rgba(255, 255, 255, 0.02);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .analogy-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .analogy h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .analogy p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .analogy p + p { margin-top: 12px; }
+    .analogy strong { color: var(--text); font-weight: 600; }
+
+    /* ===================== PROJECTS ===================== */
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 52px;
+    }
+
+    .project {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: border-color 0.25s, transform 0.25s;
+      animation: appear 0.6s ease both;
+    }
+
+    .project:hover {
+      border-color: rgba(255, 255, 255, 0.13);
+      transform: translateY(-2px);
+    }
+
+    .project:nth-child(1) { animation-delay: 0.3s; --dot: var(--blue); }
+    .project:nth-child(2) { animation-delay: 0.4s; --dot: var(--pink); }
+    .project:nth-child(3) { animation-delay: 0.5s; --dot: var(--yellow); }
+
+    .project-emoji {
+      font-size: 30px;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      background: var(--surface);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+    }
+
+    .project-body { flex: 1; }
+
+    .project-what {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dot);
+      margin-bottom: 4px;
+    }
+
+    .project-name {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.78;
+    }
+
+    /* ===================== FEEL GRID ===================== */
+    .feel-section {
+      margin-bottom: 52px;
+      animation: appear 0.6s 0.5s ease both;
+    }
+
+    .feel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .feel-grid { grid-template-columns: 1fr; }
+    }
+
+    .feel-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    .feel-icon { font-size: 28px; margin-bottom: 10px; }
+
+    .feel-title {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .feel-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ===================== PROJECT STATUS ===================== */
+    .project-status {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+
+    .status-dev {
+      background: rgba(247, 201, 72, 0.12);
+      color: var(--yellow);
+      border: 1px solid rgba(247, 201, 72, 0.25);
+    }
+
+    .status-live {
+      background: rgba(46, 207, 179, 0.12);
+      color: var(--teal);
+      border: 1px solid rgba(46, 207, 179, 0.25);
+    }
+
+    /* ===================== CLOSING ===================== */
+    .closing {
+      text-align: center;
+      padding-top: 44px;
+      border-top: 1px solid var(--border);
+      animation: appear 0.6s 0.6s ease both;
+    }
+
+    .closing-emoji { font-size: 36px; margin-bottom: 16px; }
+
+    .closing p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 440px;
+      margin: 0 auto 28px;
+    }
+
+    .closing strong { color: var(--text); font-weight: 600; }
+
+    .closing-footer {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+      margin-bottom: 28px;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    .btn-whatsapp svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+
+    /* ===================== ORBIT ===================== */
+    .orbit-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 52px 0;
+      animation: appear 0.8s 0.2s ease both;
+    }
+
+    .orbit {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+
+    /* core circle */
+    .orbit-core {
+      position: absolute;
+      inset: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--teal);
+      box-shadow: 0 0 24px rgba(46, 207, 179, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--teal);
+      text-align: center;
+      line-height: 1.3;
+      z-index: 2;
+    }
+
+    /* rings */
+    .orbit-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      transform-origin: center center;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit-ring-1 {
+      width: 150px;
+      height: 150px;
+      animation: spin 8s linear infinite;
+    }
+
+    .orbit-ring-2 {
+      width: 260px;
+      height: 260px;
+      animation: spin 14s linear infinite reverse;
+    }
+
+    /* nodes */
+    .orbit-node {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      /* offset to sit on the ring edge */
+      margin: -19px 0 0 -19px;
+    }
+
+    /* ring-1: 2 nodes at 0° and 180° */
+    .orbit-ring-1 .orbit-node:nth-child(1) { top: 0;   left: 50%; animation: counter-spin 8s linear infinite; }
+    .orbit-ring-1 .orbit-node:nth-child(2) { top: 100%; left: 50%; animation: counter-spin 8s linear infinite; }
+
+    /* ring-2: 3 nodes at 0°, 120°, 240° */
+    .orbit-ring-2 .orbit-node:nth-child(1) { top: 0%;    left: 50%;                                    animation: counter-spin 14s linear infinite reverse; }
+    .orbit-ring-2 .orbit-node:nth-child(2) { top: 75%;   left: 93.3%;                                  animation: counter-spin 14s linear infinite reverse; }
+    .orbit-ring-2 .orbit-node:nth-child(3) { top: 75%;   left: 6.7%;                                   animation: counter-spin 14s linear infinite reverse; }
+
+    @keyframes spin         { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes counter-spin { to { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+    /* ===================== ANIMATION ===================== */
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===================== MOBILE ===================== */
+    @media (max-width: 480px) {
+      .page { padding: 48px 20px 64px; }
+      .analogy { padding: 28px 24px; }
+      .project { padding: 20px; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="page">
+
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+      <p class="eyebrow">Lo que hago</p>
+      <h1>Le enseño a<br>las computadoras<br>a <em>pensar.</em></h1>
+      <p class="hero-body">
+        No solo "programo páginas web". Diseño sistemas inteligentes,
+        creo contenido impactante y construyo soluciones que<br><strong>transforman negocios.</strong>
+      </p>
+
+      <!-- Social links -->
+      <div class="links-row">
+         <a class="link-chip" href="https://youtube.com/@bryrodmo" target="_blank" rel="noopener">
+          ▶ YouTube
+        </a>
+        <a class="link-chip" href="https://github.com/bryrodmo" target="_blank" rel="noopener">
+          ⌥ GitHub
+        </a>
+        <a class="link-chip" href="https://patreon.com/bryrodmo" target="_blank" rel="noopener">
+          ♡ Patreon
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== ORBIT ===== -->
+    <div class="orbit-wrap">
+      <div class="orbit">
+
+        <div class="orbit-core">AI<br>Engineer</div>
+
+        <div class="orbit-ring orbit-ring-1">
+          <div class="orbit-node">🐉</div>
+          <div class="orbit-node">🤖</div>
+        </div>
+
+        <div class="orbit-ring orbit-ring-2">
+          <div class="orbit-node">🧠</div>
+          <div class="orbit-node">🔧</div>
+          <div class="orbit-node">🎬</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== ANALOGY ===== -->
+    <div class="analogy">
+      <div class="analogy-label">Para que te quede claro</div>
+      <h2>Imagínate un asistente que nunca duerme, nunca olvida, y aprende exactamente cómo trabajas tú.</h2>
+       <p>
+        Eso es lo que construyo — no solo el asistente, sino <strong>la inteligencia detrás de él.</strong>
+        La parte que decide qué hacer, cuándo hacerlo, y cómo presentarlo de la forma más útil.
+      </p>
+      <p>
+        Es como entrenar a alguien muy inteligente para que maneje una parte de tu vida.
+        Pero en vez de una persona, es un programa — y yo diseño cómo razona.
+      </p>
+    </div>
+
+    <!-- ===== PROJECTS ===== -->
+    <div class="section-title">Por ejemplo, he construido…</div>
+    <div class="projects">
+
+      <div class="project">
+        <div class="project-emoji">🐉</div>
+        <div class="project-body">
+          <div class="project-what">App de hábitos con IA</div>
+          <div class="project-name">Drakon</div>
+          <span class="project-status status-dev">En desarrollo</span>
+          <p class="project-desc">
+            Una app que actúa como tu jefe de cabecera personal. Te ayuda a arrancar el día,
+            te acompaña mientras trabajas, y cuando sientes que no puedes más —
+            te pregunta qué está pasando y te da un empujón. Y es completamente privada.
+          </p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-emoji">🤖</div>
+        <div class="project-body">
+          <div class="project-what">Agente para YouTube</div>
+          <div class="project-name">YouTube Agent</div>
+          <span class="project-status status-dev">En desarrollo</span>
+          <p class="project-desc">
+            Tengo un canal de gaming en español. Construí un sistema de IA que analiza
+            qué videos funcionan, sugiere temas y maneja la estrategia —
+            como tener un equipo de producción, pero automatizado.
+          </p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-emoji">🔧</div>
+        <div class="project-body">
+          <div class="project-what">Software para un negocio real</div>
+          <div class="project-name">QuickZone</div>
+          <span class="project-status status-live">En producción</span>
+          <p class="project-desc">
+            Un taller mecánico necesitaba controlar sus trabajos, sus mecánicos y sus recibos.
+            Construí el sistema completo en PHP con arquitectura MVC — y está funcionando hoy mismo.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== FEEL GRID ===== -->
+    <div class="feel-section">
+      <div class="section-title">Lo que esto significa en la vida real</div>
+      <div class="feel-grid">
+        <div class="feel-card">
+          <div class="feel-icon">⏱️</div>
+          <div class="feel-title">Tiempo libre</div>
+          <p class="feel-text">Lo que tomaba horas se vuelve minutos. El sistema trabaja mientras tú descansas.</p>
+        </div>
+        <div class="feel-card">
+          <div class="feel-icon">🔐</div>
+          <div class="feel-title">Tu privacidad</div>
+          <p class="feel-text">Lo que construye corre en tu máquina. Tus datos no terminan en servidores de nadie más.</p>
+        </div>
+        <div class="feel-card">
+          <div class="feel-icon">🎯</div>
+          <div class="feel-title">A tu medida</div>
+          <p class="feel-text">No apps genéricas. Sistemas que entienden tu ritmo y tu manera de trabajar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CLOSING ===== -->
+    <div class="closing">
+      <div class="closing-emoji">🤙</div>
+      <p>
+        Mi enfoque es construir sistemas que transforman negocios, optimizan procesos y crean valor a través de la tecnología.
+        Si algo se puede <strong>automatizar, organizar o hacer más inteligente</strong> — ahí es donde entro yo.
+      </p>
+      <a class="btn-whatsapp" href="https://wa.me/17875935506?text=Hola%20Bryan%2C%20vi%20tu%20página%20y%20me%20interesa%20hablar%20contigo." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Hablemos por WhatsApp
+      </a>
+      <p class="closing-footer">BryRodMo · Puerto Rico 🇵🇷</p>
+    </div>
+
+  </div><!-- /.page -->
+
+</body>
+</html>
